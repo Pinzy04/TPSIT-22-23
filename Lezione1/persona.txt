@@ -1,0 +1,8 @@
+Id: 8
+Nome: Fabio
+Nickname: Pinzy
+Messaggio: Hello World
+IP: 192.168.1.28
+Data: 07/11/2004
+Colore: Verde
+Font: Calibri
