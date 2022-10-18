@@ -10,21 +10,25 @@
   <body>
     <div class="container mt-3">
       <h2>Webserver HTTP</h2>
+      
       <form action="https://webserver-http.fabiopinzarrone.repl.co/primi" method="get">
         <div class="mb-3 mt-3">
           <button type="submit" class="btn btn-primary">Numeri primi</button>
         </div>
       </form>
+      
       <form action="https://webserver-http.fabiopinzarrone.repl.co/dispari" method="get">
           <div class="mb-3 mt-3">
             <button type="submit" class="btn btn-primary">Numeri dispari</button>
         </div>
       </form>
+      
       <form action="https://webserver-http.fabiopinzarrone.repl.co/pari" method="get">
         <div class="mb-3 mt-3">
           <button type="submit" class="btn btn-primary">Numeri pari</button>
         </div>
       </form>
+      
       <form action="https://webserver-http.fabiopinzarrone.repl.co/saluta" method="get">
         <div class="mb-3 mt-3">
           <label for="nick">Chi vuoi salutare:</label>
@@ -32,6 +36,17 @@
         </div>
         <button type="submit" class="btn btn-primary">Saluta</button>
       </form>
+
+      <form action="https://webserver-http.fabiopinzarrone.repl.co/stampasufile" method="get">
+        <div class="mb-3 mt-3">
+          <label for="string">Cosa vuoi stampare:</label>
+          <input type="text" class="form-control" id="string" placeholder="Enter String" name="string">
+          <label for="nvolte">Quante volte vuoi stampare:</label>
+          <input type="text" class="form-control" id="nvolte" placeholder="Enter times" name="nvolte">
+        </div>
+        <button type="submit" class="btn btn-primary">Stampa</button>
+      </form>
+      
     </div>
   </body>
 </html>
