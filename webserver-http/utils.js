@@ -14,7 +14,7 @@ function isPrime(n)
   }
 
 
-function prime()
+function primi()
   {
     str = '';
     for(i=0; i<101; i++)
@@ -29,10 +29,11 @@ function prime()
         if (error)
           { 
             console.log(error);
-            return
+            return 
           }
         return str;
       })
+    return str;
   }
 
 function pari()
@@ -54,6 +55,7 @@ function pari()
           }
         return str;
       })
+    return str;
   }
 
 function dispari()
@@ -75,6 +77,7 @@ function dispari()
           }
         return str;
       })
+    return str;
   }
 
 function saluta(nick) {
@@ -85,7 +88,7 @@ function saluta(nick) {
 const {readFile, writeFile,appendFile} = require('fs');
 
 module.exports={
-  primi:prime,
+  primi:primi,
   dispari:dispari,
   pari:pari,
   saluta:saluta
