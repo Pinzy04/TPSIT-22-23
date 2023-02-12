@@ -1,0 +1,28 @@
+<%- include('header'); %>
+<body style="background-image: url('https://besthqwallpapers.com/Uploads/12-10-2020/143699/thumb2-4k-gambling-table-casino-dice-chips.jpg');background-size: cover;">
+    <div class="container" style="background-color: white;border-radius: 10px; padding: 10px;">
+        <h1 class="title"><%= topicHead %></h1>
+
+        <p>
+            Il tuo budget: €<%= budget %>.<br>
+            Hai una puntata fissa di €10, in caso di vincita puoi scegliere se aggiungere la vittoria al budget o raddoppiare la puntata.
+        </p>
+        <p><%= testo %></p>
+        <%
+            if(budget <= 0) {
+                %>
+                <form action="/restart" method="post">
+                    <input type="submit" name="restart" value="RICOMINCIA" class="btn btn-info">
+                </form>
+                <%
+            } else {
+                %>
+                <form action="/score" method="post">
+                    <input type="submit" name="gioca" value="GIOCA" class="btn btn-warning">
+                </form>
+                <%
+            }
+        %>
+    </div>
+</body>
+<%- include('footer'); %>

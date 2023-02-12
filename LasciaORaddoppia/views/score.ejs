@@ -1,0 +1,37 @@
+<%- include('header'); %>
+<body style="background-image: url('https://besthqwallpapers.com/Uploads/12-10-2020/143699/thumb2-4k-gambling-table-casino-dice-chips.jpg');background-size: cover;">
+    <style type="text/css">div.allinea { float:left; margin-left:5px; }</style>
+    <div class="container" style="background-color: white;border-radius: 10px; padding: 10px;">
+        <h1 class="title"><%= topicHead %></h1>
+        <p>Il tuo budget: €<%= budget %></p>
+
+        <p><%- testo %></p>
+
+        <%
+            if(continua) {
+                %>
+                <div class="allinea">
+                    <form action="/" method="get">
+                        <input type="submit" name="lascia" value="LASCIA" class="btn btn-danger">
+                    </form>
+                </div>
+                <div class="allinea">
+                    <form action="/score" method="post">
+                        <input type="submit" name="raddoppia" value="RADDOPPIA" class="btn btn-success">
+                        <p name="raddoppia" hidden>true</p>
+                    </form>
+                </div>
+                <div style="clear:both;" />
+                <%
+            } else
+            {
+                %>
+                <form action="/" method="get">
+                    <input type="submit" name="esci" value="ESCI" class="btn btn-secondary">
+                </form>
+                <%
+            }
+        %>
+    </div>
+</body>
+<%- include('footer'); %>
