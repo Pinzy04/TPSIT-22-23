@@ -5,7 +5,7 @@ function addElementToJSON(jsonData, element) {
 }
 
 function writeFileJSON(file, dataJSON) {
-  fs.writeFile(file, JSON.stringify(dataJSON, null, 2), (err) => {
+  fs.writeFile(file, JSON.stringify(dataJSON), (err) => {
     if (err) {
       throw err;
     } else
