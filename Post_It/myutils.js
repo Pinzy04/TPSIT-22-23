@@ -5,11 +5,11 @@ function addElementToJSON(jsonData, element) {
 }
 
 function writeFileJSON(file, dataJSON) {
-  fs.writeFile(file, JSON.stringify(dataJSON), (err) => {
+  fs.writeFile(file, JSON.stringify(dataJSON, null, 2), (err) => {
     if (err) {
       throw err;
     } else
-      console.log('i dati li ho scritti nel file person.json');
+      console.log('i dati li ho scritti nel file data.json');
   })
 }
 

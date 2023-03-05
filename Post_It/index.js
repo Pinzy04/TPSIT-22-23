@@ -17,11 +17,11 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/table', function(req, res) {
+app.get('/social', function(req, res) {
 
   data = myLibrary.readFile('./data/data.json')
 
-  res.render('pages/table', {
+  res.render('pages/social', {
     data: data,
     titoloJSON: "Social",
     currentPage: "Social"
@@ -44,7 +44,7 @@ app.post('/scrivi', function(req, res) {
 
   myLibrary.addElementToJSON(dataJSON, person);
   myLibrary.writeFileJSON('./data/data.json', dataJSON);
-  res.redirect('/table');
+  res.redirect('/social');
 });
 
 app.listen(8080, function (res,req) {
