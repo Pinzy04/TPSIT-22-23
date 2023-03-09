@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <style type="text/css">
+            .oggetto {
+                color:white;
+                height:50px;
+                width:50px;
+                text-align:center;
+                font-size:20px; 
+                border-width:1px;
+                border:solid black;
+                float:left;
+                margin:5px;
+            }
+        </style>
+        <script>
+            let webSocket = new WebSocket(location.origin.replace(/^http/, 'ws'));
+            let el;
+            sigla=['n','v','b','r'];
+            let chi;
+
+            webSocket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                const el = document.getElementsByName('A');
+                ti=data.position.ti;
+                colore=data.position.colore;
+                chi=data.position.chi;
+                el[ti].style.backgroundColor=colore
+                el[ti].innerHTML=sigla[chi];
+            };
+        
+            const d = document.getElementsByName('A');
+            for(i=0;i<d.length;i++) {
+                (function(index){
+                    d[index].addEventListener("click", function() {
+                        let manda = {
+                            pos: index,
+                            cosa: sigla[chi]
+                        }
+                        const data = JSON.stringify({'manda': manda});
+                        webSocket.send(data);
+                    });
+                })(i);
+            }
+        </script>
+    </head>
+    <body>
+        <div name='A' class='oggetto'></div>
+        <div name='A' class='oggetto'></div>
+        <div name='A' class='oggetto'></div>
+    </body>
+</html>
+
