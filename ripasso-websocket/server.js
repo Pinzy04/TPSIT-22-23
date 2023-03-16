@@ -13,6 +13,7 @@ const ws_server = new Server({ server });
 let clienti=0;
 let frutta = ['arance','mandarini','mele','pere','banane'];
 let qta = [0,0,0,0,0];
+let storico = [];
 
 ws_server.on('connection', (ws) => { 
    
@@ -38,6 +39,9 @@ ws_server.on('connection', (ws) => {
       const arriva = JSON.parse(message);
       cosa=parseInt(arriva.manda.cosa);
       quanti=parseInt(arriva.manda.quanti);
+      str = quanti + "kg di " + frutta[cosa];
+      storico.push(str);
+      console.log("storico:" + storico);
 
       console.log("chi:"+ws.id+" cosa:"+cosa+" quanti:"+quanti);
       
@@ -45,7 +49,8 @@ ws_server.on('connection', (ws) => {
 
       let position = {
          qu: qta[cosa],
-         ti: cosa
+         ti: cosa,
+         st: str
       }
       const data = JSON.stringify({'position': position});
       ws_server.clients.forEach((client) => {
