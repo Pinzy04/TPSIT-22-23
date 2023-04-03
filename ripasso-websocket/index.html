@@ -1,0 +1,158 @@
+<html>
+    <head>
+        <style type="text/css">
+            .tendina {
+                background-color:white;
+                color:blue;
+                text-align:left;
+                font-size:15px; 
+                border-width:1px;
+                border:solid blue;
+                position:absolute;
+                top:10;
+                left:10;
+                height:100px;
+                width:100px;
+            }
+            .label {
+                background-color:white;
+                color:blue;
+                text-align:left;
+                font-size:15px; 
+                position:absolute;
+                top:10;
+                left:120;
+                height:30px;
+                width:50px;
+            }
+            .testo {
+                background-color:white;
+                color:blue;
+                text-align:left;
+                font-size:15px; 
+                border-width:1px;
+                border:solid blue;
+                position:absolute;
+                top:10;
+                left:150;
+                height:30px;
+                width:50px;
+            }
+            .bottone {
+                background-color:blue;
+                color:white;
+                text-align:center;
+                font-size:15px; 
+                position:absolute;
+                top:10;
+                left:220;
+                height:30px;
+                width:80px;
+            }
+            .totali {
+                position:absolute;
+                background-color:blue;
+                color:white;
+                height:50px;
+                width:90px;
+                text-align:center;
+                font-size:15px; 
+            }
+            .p {
+                background-color:white;
+                color:blue;
+                text-align:left;
+                font-size:15px; 
+                position:absolute;
+                top:30;
+                left:120;
+                height:30px;
+                width:300px;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <label class='label'>kg:</label>
+        <input type='text' class='testo' id='X' value='0'>
+        <input type='button' class='bottone' id='P' value='invia' onClick='invia(webSocket);'>
+        <p class="p" id="history"></p>
+    </body>
+</html>
+
+<script>
+        let webSocket = new WebSocket(location.origin.replace(/^http/, 'ws'));
+
+        webSocket.onmessage = (event) => {
+        
+        const data = JSON.parse(event.data);
+        
+        if(st=data.position.st) {
+            document.getElementById("history").innerHTML="Ultimo inserimento: " + st;
+        }
+        else {
+            document.getElementById("history").innerHTML="Non hai inserito nulla...";
+        }
+        
+
+        if(data.position.ti==-1) {
+            frutta=data.position.frutta;
+            qta=data.position.qta;
+
+            tendina = document.createElement('select');
+            tendina.setAttribute('id', 'T');
+            tendina.setAttribute('class', 'tendina');
+            tendina.size=frutta.length;
+
+            
+
+            for(z=0;z<frutta.length;z++) {
+
+                l=10+(z*95);
+                t=140;
+                nuovo = document.createElement('div');
+                nuovo.setAttribute('name', 'A');
+                nuovo.setAttribute('class', 'totali');
+                nuovo.setAttribute("frutta",frutta[z]);
+                nuovo.setAttribute("qta",qta[z]);
+                nuovo.style.height=50;
+                nuovo.style.width=90;
+                nuovo.style.top=t;
+                nuovo.style.left=l;
+                nuovo.innerHTML=frutta[z]+"<br>"+qta[z];
+                document.body.appendChild(nuovo);
+        
+                riga = document.createElement("option");
+                riga.textContent = frutta[z];
+                riga.value = z;
+                tendina.appendChild(riga);
+            }
+            document.body.appendChild(tendina);
+        }   
+        else {
+            const ea = document.getElementsByName('A');
+            ti=parseInt(data.position.ti);
+            qu=parseInt(data.position.qu);
+            ea[ti].setAttribute("qta",qu);
+            ea[ti].innerHTML=frutta[ti]+"<br>"+qu;
+            for(i=0; i<5; i++) {
+                ea[i].style.backgroundColor='blue';
+            }
+            ea[ti].style.backgroundColor='red';
+        }   
+        
+    };
+    
+    function invia(ws) {
+    
+        et = document.getElementById('T');
+        ex = document.getElementById('X');
+
+        let manda = {
+            cosa: et.value,
+            quanti: ex.value
+        }
+        const data = JSON.stringify({'manda': manda});
+        ws.send(data);
+    }
+</script>

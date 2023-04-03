@@ -1,0 +1,149 @@
+
+
+<html>
+
+<head>
+   <style type="text/css">
+      .oggetto
+      {
+         background-color:blue;
+         color:white;
+         height:50px;
+         width:50px;
+         text-align:center;
+         font-size:20px; 
+         border-width:1px;
+         border:solid black;
+         float:left;
+         margin:5px;
+         visibility: hidden;
+      }
+      .connessioni
+      {
+         position:absolute;
+	 top:100px; 
+	 left:10px; 
+         background-color:yellow;
+         color:black;
+         height:50px;
+         width:150px;
+         text-align:center;
+         font-size:20px; 
+         border-width:1px;
+         border:solid black;
+         margin:5px;
+         visibility: hidden;
+      }
+      .client
+      {
+         position:absolute;
+	 top:100px; 
+	 left:170px; 
+         background-color:cyan;
+         color:black;
+         height:50px;
+         width:150px;
+         text-align:center;
+         font-size:20px; 
+         border-width:1px;
+         border:solid black;
+         margin:5px;
+         visibility: hidden;
+      }
+      .nonconn
+      {
+         position:absolute;
+	 top:100px; 
+	 left:10px; 
+         background-color:pink;
+         color:black;
+         height:50px;
+         width:370px;
+         text-align:center;
+         font-size:20px; 
+         border-width:1px;
+         border:solid black;
+         margin:5px;
+         visibility: visible;
+      }
+  </style>
+
+</head>
+
+<body>
+   <div name='A' class='oggetto'></div>
+   <div name='A' class='oggetto'></div>
+   <div name='A' class='oggetto'></div>
+   <div name='A' class='oggetto'></div>
+   <div name='A' class='oggetto'></div>
+   
+   <div id='B' class='connessioni'></div>
+   <div id='C' class='client'></div>
+   <div id='D' class='nonconn'>troppe connessioni</div>
+</body>
+
+</html>
+
+<script>
+    let webSocket = new WebSocket(location.origin.replace(/^http/, 'ws'));
+    let el,ec;
+    let chi,quanti,cosa;
+
+    webSocket.onmessage = (event) => {
+       const data = JSON.parse(event.data);
+
+       const el = document.getElementsByName('A');
+       const eb = document.getElementById('B');
+       const ec = document.getElementById('C');
+       const ed = document.getElementById('D');
+
+       if(data.position.ti==1) {
+          cosa=data.position.cosa;
+          for(z=0;z<cosa.length;z++) {
+             el[z].innerHTML=cosa[z];
+          }   
+       }
+
+       if(data.position.ti==0) {
+          cosa=data.position.cosa;
+          quanti=data.position.quanti;
+          for(z=0;z<cosa.length;z++) {
+             el[z].innerHTML=cosa[z];
+             el[z].style.visibility="visible";
+          }   
+          eb.innerHTML="connessi:"+quanti;
+          eb.style.visibility="visible";
+          ed.style.visibility="hidden";
+       }   
+
+       if(data.position.ti==-1) {
+          chi=data.position.chi;
+          quanti=data.position.quanti;
+          ec.innerHTML="io sono:"+chi;
+          ec.style.visibility="visible";
+       }   
+
+       if(data.position.ti==-2) {
+          quanti=data.position.quanti;
+          eb.innerHTML="connessi:"+quanti;
+       }   
+   };
+   
+   const d = document.getElementsByName('A');
+   for(i=0;i<d.length;i++)
+   {
+      (function(index){
+          d[index].addEventListener("click", function() {
+ 
+             let manda = {
+                quale: index
+             }
+             const data = JSON.stringify({'manda': manda});
+             webSocket.send(data);
+
+          });
+       })(i);
+   }
+      
+</script>
+
