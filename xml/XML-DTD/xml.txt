@@ -1,0 +1,79 @@
+validator.w3.org
+
+
+Da un punto di vista cronologico, il primo approccio per la definizione di grammatiche per documenti XML è rappresentato dai Document Type Definition (DTD).
+
+Un Dtd è un documento che descrive i tag utilizzabili in un documento XML, la loro reciproca relazione nei confronti della struttura del documento e altre informazioni sugli attributi di ciascun tag.
+
+La sintassi di un Dtd si basa principalmente sulla presenza di due dichiarazioni: <!ELEMENT> e <!ATTLIST>. La prima definisce gli elementi utilizzabili nel documento e la struttura del documento stesso, la seconda definisce la lista di attributi per ciascun elemento. Ad esempio, la dichiarazione
+
+<!ELEMENT articolo(paragrafo+)>
+
+indica che l’elemento <articolo> ha come sottoelemento uno o più elementi <paragrafo>. Il carattere ‘+’, dopo il nome del sottoelemento, indica il relativo numero di occorrenze.
+
+Un insieme di caratteri speciali ha appunto lo scopo di indicare il numero di occorrenze di un elemento. In particolare:
+
+    +
+    indica che l’elemento è presente una o più volte
+
+    *
+    indica che l’elemento è presente zero o più volte
+
+    ?
+    indica che l’elemento è presente zero o una sola volta
+
+Per esempio, la definizione
+
+<!ELEMENT paragrafo(immagine*, testo+)>
+
+indica che l’elemento <paragrafo> contiene la sequenza di elementi <immagine> e <testo>. L’elemento <immagine> può essere presente zero o più volte, mentre <testo> deve essere presente almeno una volta.
+
+Per la definizione dei tag che non contengono sottoelementi dobbiamo distinguere il caso dei tag vuoti dai tag che racchiudono testo. Nel caso di tag vuoto, come accade per <immagine>, la definizione è
+
+<!ELEMENT immagine EMPTY>
+
+Nel caso di elementi che racchiudono testo abbiamo una definizione analoga alla seguente:
+
+<!ELEMENT testo (#PCDATA)>
+
+Esiste la possibilità di definire elementi il cui contenuto non è definito a priori, possono cioè essere vuoti o contenere altri elementi senza vincoli particolari. Per definire questo tipo di elementi si utilizza la seguente dichiarazione:
+
+<!ELEMENT elemento ANY>
+
+Per la definizione degli attributi di ciascun tag facciamo uso della dichiarazione <!ATTLIST>. Ad esempio, la dichiarazione:
+
+<!ATTLIST articolo titolo CDATA #REQUIRED>
+
+indica che l’elemento <articolo> prevede un attributo titolo che può avere come valore una qualsiasi combinazione di caratteri (CDATA). L’indicazione #REQUIRED indica che la presenza dell’attributo è obbligatoria. Valori alternativi a #REQUIRED sono:
+
+    #IMPLIED     
+    Indica che l’attributo è opzionale
+
+    #FIXED valore
+    Indica che il valore dell’attributo è fisso ed equivale al valore specificato
+
+Se un attributo prevede valori alternativi predefiniti è necessario specificarli al posto di CDATA, come accade per l’attributo tipo del tag <paragrafo>
+
+<!ATTLIST paragrafo
+      titolo   CDATA #REQUIRED
+      tipo     (abstract|bibliografia|note) #IMPLIED
+>
+
+In questo caso vengono definiti due attributi per l’elemento <paragrafo> facendo seguire alla definizione del primo attributo (titolo) quella del secondo(tipo). L’attributo tipo, opzionale, può assumere uno tra i valori abstract, bibliografia o note.
+
+Il seguente codice riporta il Dtd completo per un documento che descrive un articolo analogo a quello visto negli esempi:
+
+<!ELEMENT articolo(paragrafo+)>
+<!ELEMENT paragrafo (immagine*, testo+, codice*)>
+
+<!ELEMENT immagine EMPTY>
+<!ELEMENT testo (#PCDATA)>
+<!ELEMENT codice (#PCDATA)>
+
+<!ATTLIST articolo titolo CDATA #REQUIRED>
+<!ATTLIST paragrafo
+      titolo   CDATA #IMPLIED
+      tipo     (abstract|bibliografia|note) #IMPLIED
+>
+<!ATTLIST immagine file CDATA #REQUIRED> 
+

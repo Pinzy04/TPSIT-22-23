@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<articolo titolo="Titolo dell'articolo">
+   <paragrafo titolo="Titolo del primo paragrafo">
+      <testo>
+         Blocco di testo del primo paragrafo
+      </testo>
+      <immagine file="immagine1.jpg">
+      </immagine>
+   </paragrafo>
+   <paragrafo titolo="Titolo del secondo paragrafo">
+      <testo>
+         Blocco di testo del secondo paragrafo
+      </testo>
+      <codice>
+         Esempio di codice
+      </codice>
+      <testo>
+         Altro blocco di testo
+      </testo>
+   </paragrafo>
+   <paragrafo tipo="bibliografia">
+      <testo>
+         Riferimento ad un articolo
+      </testo>
+   </paragrafo>
+</articolo>
